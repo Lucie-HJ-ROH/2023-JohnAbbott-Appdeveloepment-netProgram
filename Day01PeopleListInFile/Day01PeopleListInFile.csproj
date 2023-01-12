@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E49CABB-31C7-4B8C-9E4A-A1E464E3EF86}</ProjectGuid>
+    <ProjectGuid>{0C30B60D-E210-4337-B933-1EDE40A28679}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Day01HelloWorld</RootNamespace>
-    <AssemblyName>Day01HelloWorld</AssemblyName>
+    <RootNamespace>Day01PeopleListInFile</RootNamespace>
+    <AssemblyName>Day01PeopleListInFile</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Homework.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PeopleList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
