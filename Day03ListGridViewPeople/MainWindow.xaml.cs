@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -128,7 +129,7 @@ namespace Day03ListGridViewPeople
                 TbxName.Text = peopleList.ElementAt(LvPeople.SelectedIndex).Name;
                 TbxAge.Text = $"{peopleList.ElementAt(LvPeople.SelectedIndex).Age}";
             }
-            TxtPersonReset();
+            
         }
 
         private void LoadDataFromFile() // call when window is loaded
@@ -167,9 +168,60 @@ namespace Day03ListGridViewPeople
 
         }
 
-        private void SaveDataToFile() // call when window is closing
+        private void SaveDataToFile(string fileName) // call when window is closing
         {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(filePath + fileName))
+                {
+                    peopleList.ForEach(person =>
+                    {
+                        writer.WriteLine($"{person.Name};{person.Age}");
+                    });
+                }
+            }
+            catch (Exception e) when (e is IOException || e is SystemException)
+            {
+                MessageBox.Show(this, "Error : Fail writing file", "Fail to save", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
+        private void MiExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Data File (*.data)|*.data|All File (*.*)|*.*|Text File (*.txt)|*.txt";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                {
+                    peopleList.ForEach(person =>
+                    {
+                        writer.WriteLine($"{person.Name};{person.Age}");
+                    });
+                }
+            }
+        }
+
+        private void MiSortByAge_Click(object sender, RoutedEventArgs e)
+        {
+            peopleList = peopleList.OrderBy(person => person.Age).ToList();
+            LvPeople.ItemsSource = peopleList;
+            LvPeople.Items.Refresh();
+            LblStatus.Text = "Sorted by Age";
+        }
+
+        private void MiSortByName_Click(object sender, RoutedEventArgs e)
+        {
+            peopleList = peopleList.OrderBy(person => person.Name).ToList();
+            LvPeople.ItemsSource = peopleList;
+            LvPeople.Items.Refresh();
+            LblStatus.Text = "Sorted by Name";
+        }
+
+        private void MiExit_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDataToFile("people.txt");
+            Environment.Exit(0);
+        }
     }
 }

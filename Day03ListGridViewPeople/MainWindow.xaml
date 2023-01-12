@@ -9,13 +9,13 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Export..."/>
+                <MenuItem Header="_Export..." Click="MiSortByAge_Click"/>
                 <Separator />
-                <MenuItem Header="E_xit" />
+                <MenuItem Header="_Exit" Click="MiExit_Click"/>
             </MenuItem>
             <MenuItem Header="_Sort">
-                <MenuItem Header="By _name" />
-                <MenuItem Header="By _age" />
+                <MenuItem Header="By _name" Click="MiSortByName_Click"/>
+                <MenuItem Header="By _age" Click="MiSortByAge_Click" />
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
