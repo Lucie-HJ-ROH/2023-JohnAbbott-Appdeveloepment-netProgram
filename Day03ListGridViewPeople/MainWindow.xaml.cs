@@ -168,11 +168,11 @@ namespace Day03ListGridViewPeople
 
         }
 
-        private void SaveDataToFile(string fileName) // call when window is closing
+        private void SaveDataToFile() // call when window is closing
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath + fileName))
+                using (StreamWriter writer = new StreamWriter(filePath))
                 {
                     peopleList.ForEach(person =>
                     {
@@ -220,7 +220,7 @@ namespace Day03ListGridViewPeople
 
         private void MiExit_Click(object sender, RoutedEventArgs e)
         {
-            SaveDataToFile("people.txt");
+            SaveDataToFile();
             Environment.Exit(0);
         }
     }
