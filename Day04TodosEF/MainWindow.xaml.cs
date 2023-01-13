@@ -20,9 +20,22 @@ namespace Day04TodosEF
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            try
+            {
+                Globals.dbContext = new TodoDbContext(); // Exceptions
+                LvToDos.ItemsSource = Globals.dbContext.Todos.ToList(); // equivalent of SELECT * FROM people
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(this, "Error reading from database\n" + ex.Message, "Fatal error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                // Close();
+                Environment.Exit(1);
+            }
         }
 
     }

@@ -1,38 +1,46 @@
-﻿<Window x:Class="Day04TodosEF.MainWindow"
+﻿<Window x:Class="Day04TodoListEF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Day04TodosEF"
-        mc:Ignorable="d"
-        Title="TodoList" Height="356" Width="800">
-    <Grid x:Name="GridMain" Margin="400,0,-8,99">
-        <Label Content="Task:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="140"/>
-        <Label Content="Difficulty" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="90"/>
-        <TextBox x:Name="TbxName" HorizontalAlignment="Left" Margin="90,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="291"/>
-        <Label x:Name="LblTempC" ContentStringFormat="{}{0:0.0}°C" Content="2" HorizontalAlignment="Left" Margin="105,54,0,0" VerticalAlignment="Top" Width="45"/>
-
-        <Slider x:Name="SliderDifficulty" IsSnapToTickEnabled="True" TickPlacement="BottomRight" TickFrequency="1" Minimum="1" Maximum="5" Value="2" HorizontalAlignment="Left" Margin="164,58,0,0" VerticalAlignment="Top" Width="217"/>
-        <Label Content="Due Date" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox x:Name="TbxName_Copy" HorizontalAlignment="Left" Margin="90,99,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="291"/>
-        <Button x:Name="BtnAdd"  Content="Add" HorizontalAlignment="Left" Margin="26,200,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
-        <Button x:Name="BtnDelete"  Content="Delete" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Top" Width="92" Height="24"/>
-        <Button x:Name="BtnUpdate"  Content="Update" HorizontalAlignment="Left" Margin="288,200,0,0" VerticalAlignment="Top" Width="93" Height="24"/>
-        <Button x:Name="BtnExport"  Content="Export all to file" HorizontalAlignment="Left" Margin="-310,200,0,0" VerticalAlignment="Top" Width="195" Height="24"/>
-        <ListView Name="LvPeople" SelectionMode="Single" Margin="-381,7,420,46">
+        xmlns:local="clr-namespace:Day04TodoListEF"
+        mc:Ignorable="d" Loaded="Window_Loaded" Closing="Window_Closing"
+        Title="ToDo App" Height="350" Width="1000"
+        ResizeMode="NoResize"
+     >
+    <Grid Height="324" VerticalAlignment="Top" Margin="0,10,0,0">
+        <ListView Name="LvToDos"  Margin="17,6,327,69" SelectionChanged="LvTodos_OnSelectionChanged" SelectionMode="Single" BorderBrush="#FF8994A7">
+            <ListView.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120"  DisplayMemberBinding="{Binding Task}"/>
-                    <GridViewColumn Header="Age" Width="100"  DisplayMemberBinding="{Binding Difficulty}" />
-                    <GridViewColumn Header="Name" Width="50"  DisplayMemberBinding="{Binding DueDate}"/>
-                    <GridViewColumn Header="Age" Width="100"  DisplayMemberBinding="{Binding Status}" />
+                    <GridViewColumn Header="Task" Width="350"  DisplayMemberBinding="{Binding Task}" />
+                    <GridViewColumn Header="Difficulty" Width="60" DisplayMemberBinding="{Binding Difficulty}" />
+                    <GridViewColumn Header="Due Date" Width="150" DisplayMemberBinding="{Binding DueDate, StringFormat='\d'}" />
+                    <GridViewColumn Header="Status" Width="70" DisplayMemberBinding="{Binding Status}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <ComboBox HorizontalAlignment="Left" Height="20" Margin="90,142,0,0" VerticalAlignment="Top" Width="291"/>
+        <Label Content="Task:" HorizontalAlignment="Left" Margin="674,8,0,0" VerticalAlignment="Top" Width="69" Height="29"/>
+        <TextBox Name="TaskInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="738,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" />
+        <Label Content="Difficulty:" HorizontalAlignment="Left" Margin="674,57,0,0" VerticalAlignment="Top" Width="56" Height="29"/>
+        <Slider  Name="DifficultySlider" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" TickPlacement="TopLeft" TickFrequency="1" Minimum="1" Maximum="5" SelectionStart="1" SelectionEnd="5" HorizontalAlignment="Left" Margin="771,57,0,0" VerticalAlignment="Top" Width="167" Height="29"/>
+        <Label Content="{Binding ElementName=DifficultySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="735,57,246,241" />
+        <Label Content="Due Date:" HorizontalAlignment="Left" Margin="674,103,0,0" VerticalAlignment="Top" Width="66" Height="27"/>
+        <DatePicker Name="DueDatePicker" HorizontalAlignment="Left" Margin="738,103,0,0" VerticalAlignment="Top" Width="200" Height="27"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="676,149,0,0" VerticalAlignment="Top" Width="66" Height="29"/>
+        <ComboBox x:Name="StatusComboBox" HorizontalAlignment="Left" Margin="738,153,0,0" VerticalAlignment="Top" Width="128">
+            <ComboBoxItem x:Name="ComboItemPending" Content="Pending" IsSelected="True"/>
+            <ComboBoxItem x:Name="ComboItemDone" Content="Done"/>
+            <ComboBoxItem x:Name="ComboItemDelegated" Content="Delegated"/>
+        </ComboBox>
+        <Button Name="BtnAdd" Content="Add" HorizontalAlignment="Left" Margin="735,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnAdd_Click"/>
+        <Button Name="BtnDelete" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="808,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnDelete_Click"/>
+        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="878,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnUpdate_Click"/>
+        <Button Name="Export" Content="Export all to file" HorizontalAlignment="Left" Margin="247,269,0,0" VerticalAlignment="Top" Height="32" Width="196" Click="Export_Click" />
 
     </Grid>
-
-
 </Window>

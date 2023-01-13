@@ -4,29 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Day03FirstListView"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="851" Width="800">
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="MainWindow" Height="390" Width="400">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Name" HorizontalAlignment="Left" Height="28" Margin="21,26,0,0" VerticalAlignment="Top" Width="50" Grid.ColumnSpan="2"/>
-        <TextBox Name ="TbxName" HorizontalAlignment="Left" Height="28" Margin="85,26,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="137" Grid.ColumnSpan="2"/>
-        <Label Content="Age" HorizontalAlignment="Left" Height="28" Margin="268,26,0,0" VerticalAlignment="Top" Width="50" Grid.ColumnSpan="2"/>
-        <TextBox Name ="TbxAge"  HorizontalAlignment="Center" Height="28" Margin="0,26,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="136" Grid.Column="1" />
-        <Button Content="Add person" HorizontalAlignment="Left" Margin="566,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="30" Width="86" Click="ButtonAddPerson_Click" Grid.ColumnSpan="2">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="0.002"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <ListView Margin="32,92,150,471" Name="LsvPeopleStrings" Grid.ColumnSpan="2"/>
-        <ListView Margin="32,382,150,181" x:Name="LsvPeopleObects" Grid.ColumnSpan="2"/>
-
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="45"/>
+        <TextBox Name="TbxName" HorizontalAlignment="Left" Margin="60,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="93"/>
+        <Label Content="Age:" HorizontalAlignment="Left" Margin="162,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="TbxAge" HorizontalAlignment="Left" Margin="200,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="67"/>
+        <Button Name="BtnAddPerson" Click="BtnAddPerson_Click" Content="Add person" HorizontalAlignment="Left" Margin="290,13,0,0" VerticalAlignment="Top" Width="87"/>
+        <ListView Name="LsvPeopleStrings" HorizontalAlignment="Left" Height="140" Margin="10,53,0,0" VerticalAlignment="Top" Width="367"/>
+        <ListView Name="LsvPeopleObjects" HorizontalAlignment="Left" Height="140" Margin="10,200,0,0" VerticalAlignment="Top" Width="367"/>
     </Grid>
 </Window>

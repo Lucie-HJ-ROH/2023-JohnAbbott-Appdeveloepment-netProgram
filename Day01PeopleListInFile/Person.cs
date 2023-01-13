@@ -10,54 +10,55 @@ namespace Day01PeopleListInFile
     internal class Person
     {
 
+        // Name 2-100 characters long, not containing semicolons
         private string _name;
-
-        public string Name { 
-
+        public string Name
+        {
             get { return _name; }
-            set {
-                if (!Regex.IsMatch(value, @"^[^;]{2,100]$")) { // not semicolone, and size.
-                    throw new ArgumentException("Name must be 2-100j characters long, no ");
+            set
+            {
+                if (value.Length < 2 || value.Length > 100 || value.Contains(";"))
+                {
+                    throw new ArgumentException("Name must be 2-100 characters long, no semicolons");
                 }
-                value = _name;
-            } 
-        } // Name 2-100 characters long, not containing semicolons
+                _name = value;
+            }
+        }
 
-        private int _age; // Age 0-150 :  // underscore means don't touch.
-
+        private int _age;
+        // Age 0-150
         public int Age
         {
             get { return _age; }
             set {
-                if (value < 0 || value>150)
+                if (value < 0 || value > 150)
                 {
-                    throw new ArgumentOutOfRangeException("Age must be 0 - 150");
+                    throw new ArgumentException("Aget must be 0-150");
                 }
-                _age = value; 
+                _age = value;
             }
         }
-
-        
-        private string _city; // City 2-100 characters long, not containing semicolons
-
-
-        public string City
-        {
-
-            get { return _city; }
+        // City 2-100 characters long, not containing semicolons
+        private string _city;
+        public string City // City 2-100 characters long, not containing semicolons
+        { // property
+            get
+            {
+                return _city;
+            }
             set
             {
-                if (!Regex.IsMatch(value, @"^[^;]{2,100]$"))
-                { // not semicolone, and size.
-                    throw new ArgumentException("Name must be 2-100j characters long, no ");
+                //if (value.Length < 2 || value.Length > 100 || value.Contains(";"))
+                if (!Regex.IsMatch(value, @"^[^;]{2,100}$")) //, RegexOptions.IgnoreCase))
+                {
+                    throw new ArgumentException("Name must be 2-100 characters long, no semicolons");
                 }
-                value = _city;
+                _city = value;
             }
-        } // Name 2-100 characters long, not containing semicolons
-
+        }
         public Person(string name, int age, string city)
         {
-            Name = name;
+            Name = name; // setName(name); in Java
             Age = age;
             City = city;
         }
@@ -66,6 +67,5 @@ namespace Day01PeopleListInFile
         {
             return $"{Name} is {Age} from {City}";
         }
-
     }
 }

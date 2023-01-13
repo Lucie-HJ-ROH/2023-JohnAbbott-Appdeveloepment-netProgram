@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B4822631-006F-4903-A9D5-F88BDC9BE9DE}</ProjectGuid>
+    <ProjectGuid>{E142E5D5-5B7E-4893-ABB5-AB92617F985B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Day04TodoListEF</RootNamespace>
     <AssemblyName>Day04TodoListEF</AssemblyName>
@@ -47,6 +47,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -65,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Globals.cs" />
+    <Compile Include="Todo.cs" />
+    <Compile Include="TodoDbContext.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

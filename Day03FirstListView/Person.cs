@@ -11,16 +11,15 @@ namespace Day03FirstListView
         public string Name;
         public int Age;
 
-        public Person(string name, int age) {
+        public Person(string name, int age)
+        {
             Name = name;
             Age = age;
-            
         }
 
         public override string ToString()
         {
             return $"{Name} is {Age} y/o (from ToString)";
         }
-
     }
 }

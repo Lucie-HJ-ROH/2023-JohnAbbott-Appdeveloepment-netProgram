@@ -25,16 +25,17 @@ namespace Day03FirstListView
             InitializeComponent();
         }
 
-        private void ButtonAddPerson_Click(object sender, RoutedEventArgs e)
+        private void BtnAddPerson_Click(object sender, RoutedEventArgs e)
         {
             string name = TbxName.Text;
-            int.TryParse(TbxAge.Text, out int age);
+            int.TryParse(TbxAge.Text, out int age); // FIXME: if ...
             LsvPeopleStrings.Items.Add($"{name} is {age} y/o");
+            // clear the inputs
             TbxName.Text = "";
             TbxAge.Text = "";
 
-            LsvPeopleObects.Items.Add(new Person(name, age));
-
+            // List of Objects
+            LsvPeopleObjects.Items.Add(new Person(name, age));
         }
     }
 }
