@@ -5,8 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MidtermTravel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Travel" Height="500" Width="1000"
+        ResizeMode="NoResize">
     <Grid>
-        
+        <Button Name="BtnSave" Content="Save Selected" HorizontalAlignment="Left" Margin="17,21,0,0" VerticalAlignment="Top" Width="235" Height="24"/>
+        <ListView Name="LvTrip" SelectionChanged="LvTrip_OnSelectionChanged" Margin="17,65,327,10" SelectionMode="Single" BorderBrush="#FF8994A7">
+            <ListView.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding TravlerName}" />
+                    <GridViewColumn Header="Passport" Width="100" DisplayMemberBinding="{Binding TravlerPassport}" />
+                    <GridViewColumn Header="Destination" Width="150"  DisplayMemberBinding="{Binding Destination}" />
+                    <GridViewColumn Header="DepartureDate" Width="150" DisplayMemberBinding="{Binding DepartureDate, StringFormat='\d'}" />
+                    <GridViewColumn Header="ReturnDate" Width="150" DisplayMemberBinding="{Binding ReturnDate, StringFormat='\d'}" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Destination:" HorizontalAlignment="Left" Margin="680,77,0,0" VerticalAlignment="Top" Width="69" Height="29"/>
+        <TextBox Name="DestinationInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="764,77,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" />
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="680,122,0,0" VerticalAlignment="Top" Width="69" Height="29"/>
+        <TextBox Name="NameInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="764,122,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" />
+        <Label Content="Passport:" HorizontalAlignment="Left" Margin="680,172,0,0" VerticalAlignment="Top" Width="69" Height="29"/>
+        <TextBox Name="PassportInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="764,172,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" />
+        <Label Content="Departure:" HorizontalAlignment="Left" Margin="682,221,0,0" VerticalAlignment="Top" Width="66" Height="27"/>
+        <DatePicker Name="DepartureDate" HorizontalAlignment="Left" Margin="768,221,0,0" VerticalAlignment="Top" Width="200" Height="27"/>
+        <Label Content="Return:" HorizontalAlignment="Left" Margin="682,264,0,0" VerticalAlignment="Top" Width="66" Height="27"/>
+        <DatePicker x:Name="ReturnDate" HorizontalAlignment="Left" Margin="768,264,0,0" VerticalAlignment="Top" Width="200" Height="27"/>
+
+        <Button Name="BtnAdd" Content="Add" HorizontalAlignment="Left" Margin="744,400,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnAdd_Click"/>
+        <Button Name="BtnDelete" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="817,400,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnDelete_Click" />
+        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="887,400,0,0" VerticalAlignment="Top" Width="60" Height="24" />
+
+
     </Grid>
 </Window>
