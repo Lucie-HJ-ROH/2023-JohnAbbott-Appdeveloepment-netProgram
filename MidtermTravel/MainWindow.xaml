@@ -8,8 +8,8 @@
         Title="Travel" Height="500" Width="1000"
         ResizeMode="NoResize">
     <Grid>
-        <Button Name="BtnSave" Content="Save Selected" HorizontalAlignment="Left" Margin="17,21,0,0" VerticalAlignment="Top" Width="235" Height="24"/>
-        <ListView Name="LvTrip" SelectionChanged="LvTrip_OnSelectionChanged" Margin="17,65,327,10" SelectionMode="Single" BorderBrush="#FF8994A7">
+        <Button Name="BtnSave" Content="Save Selected" HorizontalAlignment="Left" Margin="17,21,0,0" VerticalAlignment="Top" Width="235" Height="24" Click="BtnSave_Click"/>
+        <ListView Name="LvTrip" SelectionChanged="LvTrip_OnSelectionChanged" Margin="17,65,327,10" SelectionMode="Multiple" BorderBrush="#FF8994A7">
             <ListView.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="TextWrapping" Value="Wrap"/>
@@ -39,7 +39,7 @@
 
         <Button Name="BtnAdd" Content="Add" HorizontalAlignment="Left" Margin="744,400,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnAdd_Click"/>
         <Button Name="BtnDelete" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="817,400,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnDelete_Click" />
-        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="887,400,0,0" VerticalAlignment="Top" Width="60" Height="24" />
+        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="887,400,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnUpdate_Click" />
 
 
     </Grid>

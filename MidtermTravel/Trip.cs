@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 namespace MidtermTravel
 {
@@ -16,8 +17,11 @@ namespace MidtermTravel
             Destination = destination;
             TravlerName = name;
             TravlerPassport= passport;
-            DepartureDate = departureDate;
-            ReturnDate = returnDate;
+//            DepartureDate = departureDate;
+//            ReturnDate = returnDate;
+            
+            
+             SetDepartureReturnDates(departureDate, returnDate); 
 
 
         }
@@ -81,16 +85,21 @@ namespace MidtermTravel
             }
             set
             {
-                /*
-                if (Regex.IsMatch(_travlerPassport, @"^([a-zA-Z0-9])+$"))
+                //^[A - Z]{2}[0-9]{6}$   -match upper characters followed by 6 digits
+                
+
+                if (!string.IsNullOrEmpty(_travlerPassport))
                 {
-                    throw new ArgumentException("Travler's passport must be started  with 2 upper caracters.");
-                }*/
-                if (value.Length < 2 || value.Length > 31)
-                {
-                    throw new ArgumentException("Travler's passport length must be 2-30 characters long");
+                    if (!Regex.IsMatch(_travlerPassport, @"^[A-Z]{2}[0-9]{6}$")) {
+                        throw new ArgumentException("Travler's passport must be started  with 2 upper caracters.");
+                    }
+                
+                      
                 }
                 _travlerPassport = value;
+
+
+
             }
         }
 
@@ -107,6 +116,7 @@ namespace MidtermTravel
             {
                 return _departureDate;
             }
+/*
             set
             {
                 if (value.Year < 1900 || value.Year > 2099)
@@ -115,6 +125,7 @@ namespace MidtermTravel
                 }
                 _departureDate = value;
             }
+*/
         }
 
         //Return date
@@ -130,16 +141,38 @@ namespace MidtermTravel
             {
                 return _returnDate;
             }
+        /*    
             set
             {
+
+
                 if ((value.Year < 1900 || value.Year > 2099) &&( _departureDate.Year > value.Year && _departureDate.Month > value.Month && _departureDate.Date > value.Date))
                 {
                     throw new ArgumentException("Invalid year. Must be between 1900-2099.");
                 }
                 _returnDate = value;
             }
+        */
+            
         }
 
+        public void SetDepartureReturnDates(DateTime dep, DateTime ret) {
+
+
+            if (dep > ret)
+            {
+                throw new ArgumentException("Return date must be later than department date");
+               
+            }
+            if (dep.Year < 1900 || dep.Year > 2099 || ret.Year < 1900 || ret.Year > 2099) {
+                throw new ArgumentException("Invalid year. Must be between 1900-2099.");
+                
+
+            }
+            _departureDate = dep;
+            _returnDate = ret;
+           
+        }
 
     }
 }

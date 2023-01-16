@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,13 @@ namespace MidtermTravel
     /// </summary>
     public partial class MainWindow : Window
     {
+        const string DataFileName = @"..\..\trip.txt";
         public MainWindow()
         {
             InitializeComponent();
             try
             {
-                Globals.dbContext = new TripDBContext();
+                Globals.dbContext = new TripDBContextNew();
                 LvTrip.ItemsSource = Globals.dbContext.Trips.ToList();
              }
             catch (SystemException ex)
@@ -47,13 +49,20 @@ namespace MidtermTravel
             DateTime returnDate = ReturnDate.SelectedDate.Value;
             try
             {
+                if (DepartureDate.SelectedDate == null)
+                {
+                    throw new ArgumentException("Please select a due date");
+                }
+                if (ReturnDate.SelectedDate == null)
+                {
+                    throw new ArgumentException("Please select a due date");
+                }
                 // public Trip(string destination, string name, string passport, DateTime departureDate, DateTime returnDate)
                 Trip newTrip = new Trip(destination, name, passport, departureDate, returnDate);
                 Globals.dbContext.Trips.Add(newTrip);
                 Globals.dbContext.SaveChanges();
 
                 LvTrip.ItemsSource = Globals.dbContext.Trips.ToList();
-
             }
             catch (ArgumentException ex) {
                 MessageBox.Show(this, ex.Message, "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -78,8 +87,20 @@ namespace MidtermTravel
         private void LvTrip_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Trip currSelTrip = LvTrip.SelectedItem as Trip;
-            BtnDelete.IsEnabled = (currSelTrip != null);
-            BtnUpdate.IsEnabled = (currSelTrip != null);
+
+            int cnt = LvTrip.SelectedItems.Count;
+            if (cnt > 1)
+            {
+                BtnDelete.IsEnabled = false;
+                BtnUpdate.IsEnabled = false;
+            }
+            else {
+                BtnDelete.IsEnabled = (currSelTrip != null);
+                BtnUpdate.IsEnabled = (currSelTrip != null);
+            }
+            
+
+
 
             if(currSelTrip!= null)
             {
@@ -106,6 +127,48 @@ namespace MidtermTravel
             LvTrip.ItemsSource = Globals.dbContext.Trips.ToList();
             LvTrip.Items.Refresh();
             ResetFields();
+
+        }
+
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            Trip currSelTrip = LvTrip.SelectedItem as Trip;
+            if (currSelTrip == null) { return; }
+
+            currSelTrip.Destination = DestinationInput.Text;
+            currSelTrip.TravlerName = NameInput.Text;
+            currSelTrip.TravlerPassport = PassportInput.Text;
+            // currSelTrip.DepartureDate = (DateTime)DepartureDate.SelectedDate;
+            //currSelTrip.ReturnDate = (DateTime)ReturnDate.SelectedDate;
+            currSelTrip.SetDepartureReturnDates((DateTime)DepartureDate.SelectedDate, (DateTime)ReturnDate.SelectedDate);
+
+            Globals.dbContext.SaveChanges();
+            LvTrip.ItemsSource = Globals.dbContext.Trips.ToList();
+            LvTrip.Items.Refresh();
+            ResetFields();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            List<String> lines = new List<String>();
+            int cnt = LvTrip.SelectedItems.Count;
+
+            for (int i = 0; i < cnt; i++)
+            {
+                Trip currSelTrip = LvTrip.SelectedItems[i] as Trip;
+
+                lines.Add($"{currSelTrip.Destination};{currSelTrip.TravlerName}{currSelTrip.TravlerPassport}{currSelTrip.DepartureDate}{currSelTrip.ReturnDate}");
+
+            }
+            try
+            {
+                File.WriteAllLines(DataFileName, lines);
+                MessageBox.Show("Save Success!");
+            }
+            catch (SystemException ex)
+            {
+                MessageBox.Show(this, "Error writing to file\n" + ex.Message, "File access error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
     }

@@ -8,7 +8,7 @@ namespace MidtermTravel
 {
     internal class Globals
     {
-        static internal TripDBContext dbContext;
+        static internal TripDBContextNew dbContext;
 
 
     }

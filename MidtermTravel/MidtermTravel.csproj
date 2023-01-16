@@ -70,6 +70,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Trip.cs" />
     <Compile Include="TripDBContext.cs" />
+    <Compile Include="TripDBContextNew.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
