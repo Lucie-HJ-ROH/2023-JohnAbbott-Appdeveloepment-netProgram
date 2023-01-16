@@ -9,7 +9,11 @@
         ResizeMode="NoResize"
      >
     <Grid Height="324" VerticalAlignment="Top" Margin="0,10,0,0">
-        <ListView Name="LvToDos"  Margin="17,6,327,69" SelectionChanged="LvTodos_OnSelectionChanged" SelectionMode="Single" BorderBrush="#FF8994A7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="331*"/>
+            <ColumnDefinition Width="169*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Name="LvToDos"  Margin="17,6,327,69" SelectionChanged="LvTodos_OnSelectionChanged" SelectionMode="Single" BorderBrush="#FF8994A7" Grid.ColumnSpan="2">
             <ListView.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="TextWrapping" Value="Wrap"/>
@@ -24,22 +28,22 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="Task:" HorizontalAlignment="Left" Margin="674,8,0,0" VerticalAlignment="Top" Width="69" Height="29"/>
-        <TextBox Name="TaskInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="738,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" />
-        <Label Content="Difficulty:" HorizontalAlignment="Left" Margin="674,57,0,0" VerticalAlignment="Top" Width="56" Height="29"/>
-        <Slider  Name="DifficultySlider" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" TickPlacement="TopLeft" TickFrequency="1" Minimum="1" Maximum="5" SelectionStart="1" SelectionEnd="5" HorizontalAlignment="Left" Margin="771,57,0,0" VerticalAlignment="Top" Width="167" Height="29"/>
-        <Label Content="{Binding ElementName=DifficultySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="735,57,246,241" />
-        <Label Content="Due Date:" HorizontalAlignment="Left" Margin="674,103,0,0" VerticalAlignment="Top" Width="66" Height="27"/>
-        <DatePicker Name="DueDatePicker" HorizontalAlignment="Left" Margin="738,103,0,0" VerticalAlignment="Top" Width="200" Height="27"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="676,149,0,0" VerticalAlignment="Top" Width="66" Height="29"/>
-        <ComboBox x:Name="StatusComboBox" HorizontalAlignment="Left" Margin="738,153,0,0" VerticalAlignment="Top" Width="128">
+        <Label Content="Task:" HorizontalAlignment="Left" Margin="12,8,0,0" VerticalAlignment="Top" Width="69" Height="29" Grid.Column="1"/>
+        <TextBox Name="TaskInput" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="76,8,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" Height="29" Grid.Column="1" />
+        <Label Content="Difficulty:" HorizontalAlignment="Left" Margin="12,57,0,0" VerticalAlignment="Top" Width="56" Height="29" Grid.Column="1"/>
+        <Slider  Name="DifficultySlider" IsSelectionRangeEnabled="True" IsSnapToTickEnabled="True" TickPlacement="TopLeft" TickFrequency="1" Minimum="1" Maximum="5" SelectionStart="1" SelectionEnd="5" HorizontalAlignment="Left" Margin="109,57,0,0" VerticalAlignment="Top" Width="167" Height="29" Grid.Column="1"/>
+        <Label Content="{Binding ElementName=DifficultySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="73,57,246,241" Grid.Column="1" />
+        <Label Content="Due Date:" HorizontalAlignment="Left" Margin="12,103,0,0" VerticalAlignment="Top" Width="66" Height="27" Grid.Column="1"/>
+        <DatePicker Name="DueDatePicker" HorizontalAlignment="Left" Margin="76,103,0,0" VerticalAlignment="Top" Width="200" Height="27" Grid.Column="1"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="14,149,0,0" VerticalAlignment="Top" Width="66" Height="29" Grid.Column="1"/>
+        <ComboBox x:Name="StatusComboBox" HorizontalAlignment="Left" Margin="76,153,0,0" VerticalAlignment="Top" Width="128" Grid.Column="1">
             <ComboBoxItem x:Name="ComboItemPending" Content="Pending" IsSelected="True"/>
             <ComboBoxItem x:Name="ComboItemDone" Content="Done"/>
             <ComboBoxItem x:Name="ComboItemDelegated" Content="Delegated"/>
         </ComboBox>
-        <Button Name="BtnAdd" Content="Add" HorizontalAlignment="Left" Margin="735,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnAdd_Click"/>
-        <Button Name="BtnDelete" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="808,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnDelete_Click"/>
-        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="878,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnUpdate_Click"/>
+        <Button Name="BtnAdd" Content="Add" HorizontalAlignment="Left" Margin="73,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnAdd_Click" Grid.Column="1"/>
+        <Button Name="BtnDelete" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="146,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnDelete_Click" Grid.Column="1"/>
+        <Button Name="BtnUpdate" IsEnabled="False" Content="Update" HorizontalAlignment="Left" Margin="216,208,0,0" VerticalAlignment="Top" Width="60" Height="24" Click="BtnUpdate_Click" Grid.Column="1"/>
         <Button Name="Export" Content="Export all to file" HorizontalAlignment="Left" Margin="247,269,0,0" VerticalAlignment="Top" Height="32" Width="196" Click="Export_Click" />
 
     </Grid>

@@ -46,11 +46,14 @@ namespace Day04TodoListEF
 
             string task = TaskInput.Text;
             int difficulty = (int)DifficultySlider.Value;
-            DateTime dueDate = (DateTime)DueDatePicker.SelectedDate;
+            DateTime dueDate = DueDatePicker.SelectedDate.Value;
             Todo.StatusEnum status = (Todo.StatusEnum)StatusComboBox.SelectedIndex;
 
             Globals.dbContext.Todos.Add(new Todo(task, difficulty, dueDate, status));
             Globals.dbContext.SaveChanges();
+            
+            todoList.Add(new Todo(task, difficulty, dueDate, status));
+
             LvToDos.ItemsSource = Globals.dbContext.Todos.ToList();
             ResetFields();
 
@@ -73,6 +76,7 @@ namespace Day04TodoListEF
             {
                 TaskInput.Text = currSelTodo.Task;
                 DifficultySlider.Value = currSelTodo.Difficulty;
+                DueDatePicker.SelectedDate= currSelTodo.DueDate;
                 StatusComboBox.SelectedIndex = (int)currSelTodo.Status;
 
             }
@@ -80,15 +84,31 @@ namespace Day04TodoListEF
 
         private void SaveDataToFile() // call when window is closing
         {
+            MessageBox.Show(todoList.Count.ToString());
+
+            
             List<string> lines = new List<string>();
-            foreach (Todo p in todoList)
+
+            foreach (Todo todo in todoList)
             {
-                lines.Add($"{p.Id};{p.Task};{p.Difficulty};{p.DueDate};{p.Status}");
+                lines.Add($"{todo.Id};{todo.Task};{todo.Difficulty};{todo.DueDate};{todo.Status}");
+               
             }
+
             try
             {
                 File.WriteAllLines(DataFileName, lines);
             }
+            
+            /*
+            try
+            {
+                using (StreamWriter streamWriter = new StreamWriter(DataFileName)) { 
+                   todoList.ForEach(todo => {
+                       streamWriter.WriteLine($"{todo.Id};{todo.Task};{todo.Difficulty};{todo.DueDate};{todo.Status}");
+                   });
+                }
+            }*/
             catch (SystemException ex)
             {
                 MessageBox.Show(this, "Error writing to file\n" + ex.Message, "File access error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -143,11 +163,14 @@ namespace Day04TodoListEF
             if (currSelTodo == null) { return; }
             var result = MessageBox.Show(this, "Are you sure you want to delete this item?\n" + currSelTodo, "Confirm deletion", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes) { return; }
+            //todoList.RemoveAt(LvToDos.SelectedIndex);
+            Globals.dbContext.Todos.Remove(currSelTodo);
+            Globals.dbContext.SaveChanges();
 
-            todoList.Remove(currSelTodo);
+            LvToDos.ItemsSource = Globals.dbContext.Todos.ToList();
             LvToDos.Items.Refresh();
-            LvToDos.SelectedIndex = -1;
             ResetFields();
+
 
         }
 
@@ -155,15 +178,25 @@ namespace Day04TodoListEF
         {
             Todo currSelTodo = LvToDos.SelectedItem as Todo;
             if (currSelTodo == null) { return; }
-            
             currSelTodo.Task = TaskInput.Text;
             currSelTodo.Difficulty = (int)DifficultySlider.Value;
             currSelTodo.DueDate = (DateTime)DueDatePicker.SelectedDate;
             currSelTodo.Status = (Todo.StatusEnum)StatusComboBox.SelectedIndex;
+            Globals.dbContext.SaveChanges();
+
+            
+            todoList.ElementAt(LvToDos.SelectedIndex).Task = TaskInput.Text;
+            todoList.ElementAt(LvToDos.SelectedIndex).Difficulty = (int)DifficultySlider.Value;
+            todoList.ElementAt(LvToDos.SelectedIndex).DueDate = (DateTime)DueDatePicker.SelectedDate;
+            todoList.ElementAt(LvToDos.SelectedIndex).Status = (Todo.StatusEnum)StatusComboBox.SelectedIndex;
+            
+
+            LvToDos.ItemsSource = Globals.dbContext.Todos.ToList();
+            
             LvToDos.Items.Refresh();
             LvToDos.SelectedIndex = -1;
             ResetFields();
-
+   
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
